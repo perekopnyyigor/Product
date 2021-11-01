@@ -18,11 +18,14 @@ public class Database {
     {
 
 
-        SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app.db" , MODE_PRIVATE, null );
+        SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app1.db" , MODE_PRIVATE, null );
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY   AUTOINCREMENT, " +
-                "name TEXT, " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS prod (id INTEGER PRIMARY KEY   AUTOINCREMENT, " +
+                "name VARCHAR(255), " +
                 "code VARCHAR(255), " +
+                "img VARCHAR(255), " +
+                "category VARCHAR(255), " +
+                "quantity REAL, " +
                 "price1 REAL, " +
                 "price2 REAL)");
 
@@ -31,7 +34,7 @@ public class Database {
     public ArrayList<String> select(String column, String table, String parametr)
     {
         ArrayList<String> select = new ArrayList<>();
-        SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app.db" , MODE_PRIVATE, null );
+        SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app1.db" , MODE_PRIVATE, null );
 
         Cursor query = db.rawQuery("SELECT "+column+" FROM "+table+" "+parametr+";", null);
         if(query.moveToFirst()){
@@ -44,5 +47,11 @@ public class Database {
         query.close();
         db.close();
         return select;
+    }
+
+    public String select_alone(String column, String table, String parametr)
+    {
+        ArrayList<String> select=select(column, table, parametr);
+        return select.get(0);
     }
 }

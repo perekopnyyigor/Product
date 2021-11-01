@@ -9,10 +9,15 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Category {
     public String name;
-    public Integer id;
+    public String id;
     public Activity activity;
 
-    public Category(Integer id) {this.id=id;}
+    public Category(Activity activity, String id)
+    {
+        Database database = new Database(activity);
+        this.id=id;
+        this.name =  database.select_alone("id","prod","WHERE code ="+this.id);
+    }
 
     public Category(Activity activity)
     {
@@ -22,12 +27,17 @@ public class Category {
     public void add(String name)
     {
 
-        SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app.db" , MODE_PRIVATE, null);
+        SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app1.db" , MODE_PRIVATE, null);
         db.execSQL("INSERT  INTO category (name) VALUES ('"+name+"');");
     }
     public ArrayList<String> showAll()
     {
         Database database = new Database(activity);
         return database.select("name","category","");
+    }
+    public String searchId(String name)
+    {
+        Database database = new Database(activity);
+        return database.select_alone("id","prod","WHERE name ="+name);
     }
 }
