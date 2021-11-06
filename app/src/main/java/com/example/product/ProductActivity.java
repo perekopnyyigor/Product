@@ -35,12 +35,13 @@ public class ProductActivity extends AppCompatActivity {
 
     Category category = new Category(this);
     ListView list;
-    private String categorySelect;
+    private int categorySelect;
     private Product product = new Product(this);
-    private static final int CAMERA_REQUEST = 1;
-    Img img = new Img(this);
-    ImageView picView ;
 
+    private static final int CAMERA_REQUEST = 1;
+    private Img img = new Img(this);
+    private ImageView picView ;
+    private ArrayList<String> categories_id;
     private String name;
     private String code;
     private double price1;
@@ -52,6 +53,7 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
         picView = findViewById(R.id.Photo);
+        categories_id = category.showAll();
         fillSpiner();
         makeList();
         selectMenu();
@@ -73,13 +75,31 @@ public class ProductActivity extends AppCompatActivity {
         EditText editTextCode = findViewById(R.id.code);
         code =  editTextCode.getText().toString();
 
-        String categoryId = category.searchId(categorySelect);
-        product.add(name, code, image, categoryId ,price1, price2);
+
+
+        //String categoryId=categories.get(categorySelect);
+        Category category = new Category(this,categories_id.get(categorySelect));
+
+
+
+
+        product.add(name, code, image, category.id ,price1, price2);
 
     }
     private void fillSpiner()
     {
-        ArrayList<String> categories = category.showAll();
+
+        ArrayList<String> categories = new ArrayList<>();
+
+        for (int i =0;i<categories_id.size();i++)
+        {
+            Category category = new Category(this,categories_id.get(i));
+
+
+
+            categories.add(category.name);
+        }
+
         Spinner spinner = findViewById(R.id.spinner);
         // Создаем адаптер ArrayAdapter с помощью массива строк и стандартной разметки элемета spinner
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
@@ -93,7 +113,7 @@ public class ProductActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 // Получаем выбранный объект
-                categorySelect = (String)parent.getItemAtPosition(position);
+                categorySelect = position;
 
             }
 

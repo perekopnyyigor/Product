@@ -16,7 +16,7 @@ public class Category {
     {
         Database database = new Database(activity);
         this.id=id;
-        this.name =  database.select_alone("id","prod","WHERE code ="+this.id);
+        this.name =  database.select_alone("name","category","WHERE id ="+this.id);
     }
 
     public Category(Activity activity)
@@ -33,11 +33,12 @@ public class Category {
     public ArrayList<String> showAll()
     {
         Database database = new Database(activity);
-        return database.select("name","category","");
+        return database.select("id","category","");
     }
+
     public String searchId(String name)
     {
         Database database = new Database(activity);
-        return database.select_alone("id","prod","WHERE name ="+name);
+        return database.select_alone("id","category","WHERE name ="+name);
     }
 }

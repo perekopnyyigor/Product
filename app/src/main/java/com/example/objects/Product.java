@@ -44,10 +44,18 @@ public class Product {
                 "('"+name+"' , '"+code+"' , '"+img+"', '"+category+"' , '0' , '"+price1+"' , '"+price2+"');");
     }
 
-    public ArrayList<String> showAll()
+    public ArrayList<String> showAll(String litter)
     {
         Database database = new Database(activity);
-        return database.select("id","prod","");
-
+        if (litter=="")
+            return database.select("id","prod","ORDER BY name");
+        else
+            return database.select("id","prod","WHERE name LIKE '"+litter+"%' ORDER BY name");
     }
+    public String serchId(String code)
+    {
+        Database database = new Database(activity);
+        return database.select_alone("id","prod","WHERE code ="+code);
+    }
+
 }

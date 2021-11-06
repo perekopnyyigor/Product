@@ -2,39 +2,38 @@ package com.example.product;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.adapters.MainMenuAdapter;
 import com.example.adapters.ProductAdapter;
-import com.example.objects.MainMenu;
 import com.example.objects.Product;
+import com.example.scan.IntentIntegrator;
+import com.example.scan.IntentResult;
 
 import java.util.ArrayList;
 
-public class WarehousActivity extends AppCompatActivity {
-
+public class DealActivity extends AppCompatActivity {
     Product product = new Product(this);
     ListView productsList;
     EditText editText ;
+    private ArrayList<Product> products;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_warehous);
+        setContentView(R.layout.activity_deal);
 
         editText = findViewById(R.id.name);
-
-        makeList(ini(""));
+        products = ini("");
+        makeList(products);
         changeEditText();
-
-
+        selectMenu();
     }
     private void changeEditText()
     {
@@ -42,7 +41,8 @@ public class WarehousActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String strCatName = editText.getText().toString();
-                makeList(ini(strCatName));
+                products = ini(strCatName);
+                makeList(products);
 
             }
 
@@ -58,8 +58,6 @@ public class WarehousActivity extends AppCompatActivity {
 
     private void makeList(ArrayList<Product> list)
     {
-
-
         // получаем элемент ListView
         productsList = findViewById(R.id.productsList);
 
@@ -75,8 +73,47 @@ public class WarehousActivity extends AppCompatActivity {
         ArrayList<Product> products =new ArrayList<>();
         for(int i=0;i<category_arr.size();i++)
             products.add(new Product(category_arr.get(i),this));
-
         return products;
+
+    }
+    public void scan(View view)
+    {
+        IntentIntegrator scanIntegrator = new IntentIntegrator(DealActivity.this);
+        scanIntegrator.initiateScan();
+    }
+    private void selectMenu()
+    {
+
+        // слушатель выбора в списке
+        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                String product_id = products.get(position).id;
+                Intent intent = new Intent(DealActivity.this,ProductDealActivity.class);
+                intent.putExtra("id", product_id);
+                startActivity(intent);
+
+            }
+        };
+        productsList.setOnItemClickListener(itemListener);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+//retrieve scan result
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        if (scanningResult != null) {
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+
+            String id = product.serchId(scanContent);
+            Intent intentProduct = new Intent(DealActivity.this,ProductDealActivity.class);
+            intentProduct.putExtra("id", id);
+            startActivity(intentProduct);
+        }
+
 
     }
 }

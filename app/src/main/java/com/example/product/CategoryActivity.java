@@ -27,12 +27,21 @@ public class CategoryActivity extends AppCompatActivity {
     private void makeList()
     {
 
-        ArrayList<String> category_arr = category.showAll();
+        ArrayList<String> category_id = category.showAll();
+
+        ArrayList<String> categories = new ArrayList<>();
+
+        for (int i =0;i<category_id.size();i++)
+        {
+            Category category = new Category(this,category_id.get(i));
+            categories.add(category.name);
+        }
+
         // получаем элемент ListView
         ListView countriesList = findViewById(R.id.countriesList);
 
         // создаем адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, category_arr);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, categories);
 
         // устанавливаем для списка адаптер
         countriesList.setAdapter(adapter);

@@ -30,6 +30,7 @@ public class Database {
                 "price2 REAL)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY   AUTOINCREMENT, name TEXT)");
+
     }
     public ArrayList<String> select(String column, String table, String parametr)
     {
