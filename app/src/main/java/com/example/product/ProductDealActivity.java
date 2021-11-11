@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class ProductDealActivity extends AppCompatActivity {
         product = new Product(id,this);
         fill_form();
     }
+
     private void fill_form()
     {
         TextView textViewName = findViewById(R.id.name);
@@ -38,6 +40,22 @@ public class ProductDealActivity extends AppCompatActivity {
         Uri uri = Uri.parse(product.img);
         imageView.setImageURI(uri);
 
+    }
+
+    public void add(View view)
+    {
+        EditText editTextQuantity = findViewById(R.id.quantity);
+        String quantity = editTextQuantity.getText().toString();
+
+        EditText editTextDiscount = findViewById(R.id.discont);
+        String discount = editTextDiscount.getText().toString();
+
+        Intent intent = new Intent();
+        intent.putExtra("id", product.id);
+        intent.putExtra("quantity", quantity);
+        intent.putExtra("discount", discount);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 }

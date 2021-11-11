@@ -31,6 +31,17 @@ public class Database {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY   AUTOINCREMENT, name TEXT)");
 
+        db.execSQL("CREATE TABLE IF NOT EXISTS dealList (id INTEGER PRIMARY KEY   AUTOINCREMENT, " +
+                "sum REAL , contragent_id INTEGER, type VARCHAR(255) ,Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP  )");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS dealProduct (id INTEGER PRIMARY KEY   AUTOINCREMENT, " +
+                "id_prod INTEGER," +
+                "id_dealList INTEGER," +
+                "quantity REAL," +
+                "discount REAL," +
+                "price REAL" +
+                ")");
+
     }
     public ArrayList<String> select(String column, String table, String parametr)
     {
@@ -38,6 +49,7 @@ public class Database {
         SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app1.db" , MODE_PRIVATE, null );
 
         Cursor query = db.rawQuery("SELECT "+column+" FROM "+table+" "+parametr+";", null);
+
         if(query.moveToFirst()){
             do{
                 select.add( query.getString(0));

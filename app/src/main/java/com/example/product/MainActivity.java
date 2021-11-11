@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mainMenu.add(new MainMenu("Товар",R.drawable.produkt));
         mainMenu.add(new MainMenu("Категории",R.drawable.category));
         mainMenu.add(new MainMenu("Склад",R.drawable.warehouse));
+        mainMenu.add(new MainMenu("Отчет",R.drawable.warehouse));
         return mainMenu;
     }
     private void selectMenu()
@@ -67,10 +68,12 @@ public class MainActivity extends AppCompatActivity {
                 {
                     case 0:
                         intent = new Intent(MainActivity.this, DealActivity.class);
+                        intent.putExtra("type","sell");
                         startActivity(intent);
                         break;
                     case 1:
                         intent = new Intent(MainActivity.this, DealActivity.class);
+                        intent.putExtra("type","bye");
                         startActivity(intent);
                         break;
                     case 2:
@@ -83,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
                          break;
                     case 4:
                         intent = new Intent(MainActivity.this, WarehousActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 5:
+                        intent = new Intent(MainActivity.this, RaportActivity.class);
                         startActivity(intent);
                         break;
 

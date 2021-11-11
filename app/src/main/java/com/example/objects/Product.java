@@ -29,6 +29,8 @@ public class Product {
         this.img =  database.select_alone("img","prod","WHERE id ="+this.id);
         this.code =  database.select_alone("code","prod","WHERE id ="+this.id);
         this.quantity = Double.parseDouble(database.select_alone("quantity","prod","WHERE id ="+this.id));
+        this.price1 = Double.parseDouble(database.select_alone("price1","prod","WHERE id ="+this.id));
+        this.price2 = Double.parseDouble(database.select_alone("price2","prod","WHERE id ="+this.id));
     }
 
     public Product(Activity activity)
@@ -42,6 +44,9 @@ public class Product {
         SQLiteDatabase db = this.activity.getBaseContext().openOrCreateDatabase("app1.db" , MODE_PRIVATE, null);
         db.execSQL("INSERT  INTO prod (name, code, img, category, quantity, price1, price2) VALUES " +
                 "('"+name+"' , '"+code+"' , '"+img+"', '"+category+"' , '0' , '"+price1+"' , '"+price2+"');");
+
+
+
     }
 
     public ArrayList<String> showAll(String litter)

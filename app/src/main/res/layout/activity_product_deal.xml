@@ -54,7 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:hint="0"/>
+        android:text="0"
+        android:inputType="number"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +67,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:hint="1"/>
+        android:text="1"
+        android:inputType="number"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добавить"
+        android:onClick="add"
+        ></Button>
 
     <ImageView
         android:id="@+id/Photo"
@@ -74,5 +82,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/btnVideo">
     </ImageView>
+
 
 </LinearLayout>
