@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Product">
-        <activity android:name=".RaportActivity"></activity>
+        <activity android:name=".RaportProductActivity"></activity>
+        <activity android:name=".RaportActivity" />
         <activity android:name=".ProductDealActivity" />
         <activity android:name=".DealActivity" />
         <activity android:name=".WarehousActivity" />

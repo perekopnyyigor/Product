@@ -2,7 +2,10 @@ package com.example.product;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 
 public class RaportActivity extends AppCompatActivity {
     ArrayList<String> dealLists_id;
-
+    ArrayList<DealList> dealLists;
     ListView raportList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class RaportActivity extends AppCompatActivity {
     private void makeList()
     {
 
-        ArrayList<DealList> dealLists =  ini();
+        dealLists =  ini();
 
         //Toast toast =Toast.makeText(this,dealLists.get(0).id,Toast.LENGTH_SHORT);
         //toast.show();
@@ -57,6 +60,17 @@ public class RaportActivity extends AppCompatActivity {
         // устанавливаем для списка адаптер
         raportList.setAdapter(dealListAdapter);
 
+        // слушатель выбора в списке
+        AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                Intent intent = new Intent(RaportActivity.this, RaportProductActivity.class);
+                intent.putExtra("id",dealLists.get(position).id);
+                startActivity(intent);
+            }
+        };
+        raportList.setOnItemClickListener(itemListener);
 
     }
 
